@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cozy Journal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --leather: #4e342e;
+            --paper: #fdf5e6;
+            --ink: #2c3e50;
+        }
+
+        body {
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Caveat', cursive;
+        }
+
+        /* The Leather Cover */
+        .notebook-cover {
+            background: var(--leather);
+            padding: 20px 10px 20px 30px;
+            border-radius: 8px 15px 15px 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset -5px 0 10px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 500px;
+            height: 80vh;
+            display: flex;
+        }
+
+        /* The Paper Page */
+        .page {
+            background-color: var(--paper);
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            box-sizing: border-box;
+            position: relative;
+            /* The "Torn Edge" effect */
+            clip-path: polygon(0% 0%, 98% 1%, 100% 5%, 97% 10%, 100% 15%, 98% 22%, 100% 30%, 97% 38%, 100% 45%, 98% 55%, 100% 65%, 97% 75%, 100% 85%, 98% 95%, 100% 100%, 0% 100%);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        }
+
+        /* Subtle Paper Texture Lines */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: linear-gradient(transparent 39px, #d1c4e9 40px);
+            background-size: 100% 40px;
+            pointer-events: none;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            line-height: 40px;
+            color: var(--ink);
+            resize: none;
+            outline: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background: var(--leather);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="notebook-cover">
+        <div class="page">
+            <textarea id="journal-input" placeholder="Start writing..."></textarea>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="clearJournal()">Clear Page</button>
+    </div>
+
+    <script>
+        const textarea = document.getElementById('journal-input');
+
+        // Load saved text
+        textarea.value = localStorage.getItem('cozy_journal_entry') || '';
+
+        // Auto-save on typing
+        textarea.addEventListener('input', () => {
+            localStorage.setItem('cozy_journal_entry', textarea.value);
+        });
+
+        function clearJournal() {
+            if(confirm("Are you sure you want to tear this page out?")) {
+                textarea.value = '';
+                localStorage.removeItem('cozy_journal_entry');
+            }
+        }
+    </script>
+</body>
+</html>
