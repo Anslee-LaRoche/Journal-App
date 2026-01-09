@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fish Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --red-p: #ff5252;
-            --grey-p: #718093;
-            --worm: #8854d0;
-            --wafer: #20bf6b;
+            --card-bg: #ffffff;
+            --red-p: #d63031;
+            --grey-p: #2d3436;
+            --worm: #6c5ce7;
+            --wafer: #00b894;
             --water: #0984e3;
         }
 
@@ -22,8 +21,9 @@
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(160deg, #00d2ff 0%, #3a7bd5 100%);
             margin: 0;
-            padding: 12px;
-            height: 100vh;
+            padding: 10px;
+            height: 100dvh;
+            width: 100vw;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -32,102 +32,103 @@
         .header {
             text-align: center;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
-            height: 30px;
-            margin-bottom: 5px;
+            padding: 2px 0;
             text-transform: lowercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .main-container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            /* This ensures the container stays within the screen height */
-            height: calc(100vh - 60px); 
+            gap: 8px;
+            padding-bottom: 5px;
         }
 
-        /* Each of the 4 Rows */
         .row {
             display: flex;
-            gap: 10px;
-            flex: 1; /* Makes each row exactly 1/4th of the container height */
+            gap: 8px;
+            flex: 1;
+            min-height: 0;
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 18px;
+            border-radius: 16px;
             padding: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 0px rgba(0,0,0,0.1);
             transition: all 0.2s ease;
-            border: 1px solid rgba(255,255,255,0.4);
             cursor: pointer;
             position: relative;
+            border: 2px solid rgba(0,0,0,0.05);
         }
 
-        /* Sunday & Saturday: Full width */
         .w-100 { width: 100%; }
-        
-        /* Mon, Tue, Wed: ~33% width */
         .w-33 { width: 33.33%; }
-        
-        /* Thu, Fri: 50% width */
         .w-50 { width: 50%; }
 
-        /* Interactive States */
         .card.done {
-            opacity: 0.35;
+            opacity: 0.25;
             filter: grayscale(1);
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         .card.done::after {
             content: "✓";
             position: absolute;
-            top: 10px;
-            right: 12px;
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: #2d3436;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.5;
+            color: black;
         }
 
         .day-label {
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             color: #636e72;
             text-transform: uppercase;
             font-weight: 900;
-            margin-bottom: 2px;
+            letter-spacing: 0.5px;
         }
 
         .food-item {
-            font-size: 0.85rem;
-            font-weight: 800;
+            font-size: 1.05rem; /* Larger font */
+            font-weight: 900;
             display: flex;
             align-items: center;
-            gap: 5px;
-            line-height: 1.2;
+            gap: 6px;
+            margin-top: 2px;
+            line-height: 1.1;
         }
 
         .water-badge {
             background: var(--water);
             color: white;
-            font-size: 0.6rem;
-            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            padding: 3px 8px;
             border-radius: 10px;
-            margin-top: 5px;
+            margin-top: 6px;
             display: inline-block;
+            align-self: flex-start;
         }
 
-        /* Color Classes */
         .red { color: var(--red-p); }
         .grey { color: var(--grey-p); }
         .worm { color: var(--worm); }
         .wafer { color: var(--wafer); }
 
+        /* Small mobile font scaling */
+        @media (max-height: 650px) {
+            .food-item { font-size: 0.9rem; }
+            .day-label { font-size: 0.7rem; }
+        }
     </style>
 </head>
 <body>
@@ -139,7 +140,7 @@
         <div class="row">
             <div class="card w-100" id="day-0" onclick="toggleDay('day-0')">
                 <span class="day-label">Sunday</span>
-                <div class="food-item red">● Red Pellet</div>
+                <div class="food-item red">🔴 Red Pellets</div>
                 <div class="water-badge">💧 Water Change</div>
             </div>
         </div>
@@ -147,37 +148,37 @@
         <div class="row">
             <div class="card w-33" id="day-1" onclick="toggleDay('day-1')">
                 <span class="day-label">Mon</span>
-                <div class="food-item grey">Grey</div>
+                <div class="food-item grey">⚫ Grey</div>
                 <div class="food-item worm">🪱</div>
             </div>
             <div class="card w-33" id="day-2" onclick="toggleDay('day-2')">
                 <span class="day-label">Tue</span>
-                <div class="food-item red">Red</div>
+                <div class="food-item red">🔴 Red</div>
                 <div class="food-item wafer">🌿</div>
             </div>
             <div class="card w-33" id="day-3" onclick="toggleDay('day-3')">
                 <span class="day-label">Wed</span>
-                <div class="food-item grey">Grey</div>
+                <div class="food-item grey">⚫ Grey</div>
             </div>
         </div>
 
         <div class="row">
             <div class="card w-50" id="day-4" onclick="toggleDay('day-4')">
                 <span class="day-label">Thursday</span>
-                <div class="food-item red">● Red Pellet</div>
+                <div class="food-item red">🔴 Red Pellets</div>
                 <div class="food-item worm">🪱 Bloodworms</div>
             </div>
             <div class="card w-50" id="day-5" onclick="toggleDay('day-5')">
                 <span class="day-label">Friday</span>
-                <div class="food-item grey">● Grey Pellet</div>
-                <div class="food-item wafer">🌿 Algae Wafer</div>
+                <div class="food-item grey">⚫ Grey Pellets</div>
+                <div class="food-item wafer">🌿 Algae Wafers</div>
             </div>
         </div>
 
         <div class="row">
             <div class="card w-100" id="day-6" onclick="toggleDay('day-6')">
                 <span class="day-label">Saturday</span>
-                <div class="food-item red">● Red Pellet</div>
+                <div class="food-item red">🔴 Red Pellets</div>
                 <div class="food-item worm">🪱 Bloodworms</div>
             </div>
         </div>
@@ -195,13 +196,11 @@
             const today = new Date();
             const currentWeek = getWeekNumber(today);
             
-            // Sunday Reset Logic
             if (today.getDay() === 0 && localStorage.getItem('lastResetWeek') != currentWeek) {
                 localStorage.clear();
                 localStorage.setItem('lastResetWeek', currentWeek);
             }
 
-            // Reload states
             for (let i = 0; i < 7; i++) {
                 const id = 'day-' + i;
                 if (localStorage.getItem(id) === 'true') {
