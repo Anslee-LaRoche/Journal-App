@@ -2,168 +2,166 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fish Menu 🫧</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fish Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #e0f2f1;
-            --accent: #00838f;
-            --red-p: #ff7675;
-            --grey-p: #636e72;
-            --worm: #6c5ce7;
-            --wafer: #00b894;
+            --bg: #1a1a2e; /* Slightly deeper for better contrast */
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --red-p: #ff5252;
+            --grey-p: #718093;
+            --worm: #8854d0;
+            --wafer: #20bf6b;
+            --accent: #0fbcf9;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #e0f2f1 0%, #b2ebf2 100%);
+            background: linear-gradient(160deg, #00d2ff 0%, #3a7bd5 100%);
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            color: #2d3436;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 600px; /* Narrower container to keep it on one screen */
+            padding: 10px;
+            height: 100vh; /* Lock height to screen */
+            overflow: hidden; /* Prevent scrolling */
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            padding: 20px;
         }
 
-        h1 {
+        .header {
             text-align: center;
-            font-weight: 800;
-            color: var(--accent);
-            margin: 0 0 10px 0;
-            font-size: 1.6rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin-bottom: 8px;
             text-transform: lowercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .main-stack {
+            flex: 1; /* Fills remaining space */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 15px 20px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 12px 18px;
             display: flex;
             flex-direction: column;
-            transition: 0.3s ease;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* Top & Bottom Full Width */
-        .full-width {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.9);
+        /* Sunday, Thursday, Friday, Saturday all span full width */
+        .full-row {
+            width: 100%;
         }
 
-        /* Middle Grid */
-        .mid-grid {
+        /* Monday, Tuesday, Wednesday sit side-by-side */
+        .mid-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
         }
 
-        .day-name {
-            font-weight: 800;
-            font-size: 0.9rem;
-            color: var(--accent);
+        .day-label {
+            font-size: 0.75rem;
+            color: #576574;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
         .food-item {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 6px;
-            margin: 2px 0;
         }
 
-        /* Food Styling */
-        .dot { height: 7px; width: 7px; border-radius: 50%; display: inline-block; }
-        .red-d { background: var(--red-p); }
-        .grey-d { background: var(--grey-p); }
-        
-        .label-red { color: var(--red-p); font-weight: 700; }
-        .label-grey { color: var(--grey-p); font-weight: 700; }
-        .label-worm { color: var(--worm); font-weight: 700; }
-        .label-wafer { color: var(--wafer); font-weight: 700; }
-
-        .night-tag {
-            font-size: 0.6rem;
-            background: #dfe6e9;
-            padding: 1px 4px;
-            border-radius: 4px;
-            margin-left: 2px;
+        .horizontal-split {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @media (max-width: 400px) {
-            .mid-grid { grid-template-columns: repeat(2, 1fr); }
+        .dot { height: 10px; width: 10px; border-radius: 50%; }
+        .red { color: var(--red-p); }
+        .grey { color: var(--grey-p); }
+        .worm { color: var(--worm); }
+        .wafer { color: var(--wafer); }
+
+        .tag {
+            font-size: 0.65rem;
+            background: #f1f2f6;
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: #2f3542;
+        }
+
+        @media (max-height: 600px) {
+            .header { font-size: 1rem; margin-bottom: 4px; }
+            .card { padding: 8px 12px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>bubbles & bites 🫧</h1>
+    <div class="header">bubbles & bites 🫧</div>
 
-    <div class="card full-width">
-        <div>
-            <div class="day-name">Sunday</div>
-            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellets</div>
+    <div class="main-stack">
+        <div class="card full-row horizontal-split">
+            <span class="day-label">Sunday</span>
+            <div class="food-item red"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
         </div>
-        <div style="font-size: 1.2rem;">🏠</div>
+
+        <div class="mid-row">
+            <div class="card">
+                <span class="day-label">Mon</span>
+                <div class="food-item grey">Grey</div>
+                <div class="food-item worm">🪱</div>
+            </div>
+            <div class="card">
+                <span class="day-label">Tue</span>
+                <div class="food-item red">Red</div>
+                <div class="food-item wafer">🌿 <span class="tag">PM</span></div>
+            </div>
+            <div class="card">
+                <span class="day-label">Wed</span>
+                <div class="food-item grey">Grey</div>
+                <div class="food-item" style="opacity:0.3; font-size: 0.7rem;">None</div>
+            </div>
+        </div>
+
+        <div class="card full-row horizontal-split">
+            <span class="day-label">Thursday</span>
+            <div style="text-align: right;">
+                <div class="food-item red" style="justify-content: flex-end;"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
+                <div class="food-item worm" style="justify-content: flex-end;">🪱 Bloodworms</div>
+            </div>
+        </div>
+
+        <div class="card full-row horizontal-split">
+            <span class="day-label">Friday</span>
+            <div style="text-align: right;">
+                <div class="food-item grey" style="justify-content: flex-end;"><div class="dot" style="background:var(--grey-p)"></div> Grey Pellet</div>
+                <div class="food-item wafer" style="justify-content: flex-end;">🌿 Algae Wafer <span class="tag">PM</span></div>
+            </div>
+        </div>
+
+        <div class="card full-row horizontal-split" style="border-bottom: 5px solid var(--accent);">
+            <span class="day-label">Saturday</span>
+            <div style="text-align: right;">
+                <div class="food-item red" style="justify-content: flex-end;"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
+                <div class="food-item worm" style="justify-content: flex-end;">🪱 Bloodworms</div>
+            </div>
+        </div>
     </div>
-
-    <div class="mid-grid">
-        <div class="card">
-            <div class="day-name">Mon</div>
-            <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
-            <div class="food-item label-worm">🪱 Blood</div>
-        </div>
-
-        <div class="card">
-            <div class="day-name">Tue</div>
-            <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
-            <div class="food-item label-wafer">🌿 Wafer <span class="night-tag">PM</span></div>
-        </div>
-
-        <div class="card">
-            <div class="day-name">Wed</div>
-            <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
-        </div>
-
-        <div class="card">
-            <div class="day-name">Thu</div>
-            <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
-            <div class="food-item label-worm">🪱 Blood</div>
-        </div>
-
-        <div class="card">
-            <div class="day-name">Fri</div>
-            <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
-            <div class="food-item label-wafer">🌿 Wafer <span class="night-tag">PM</span></div>
-        </div>
-    </div>
-
-    <div class="card full-width">
-        <div>
-            <div class="day-name">Saturday</div>
-            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellets</div>
-            <div class="food-item label-worm">🪱 Bloodworms</div>
-        </div>
-        <div style="font-size: 1.2rem;">✨</div>
-    </div>
-</div>
 
 </body>
 </html>
