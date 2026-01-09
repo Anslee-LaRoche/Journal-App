@@ -3,154 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Fishy Feast Schedule</title>
+    <title>Fish Feeding - Weekly View</title>
     <style>
         :root {
-            --bg-color: #e0f2f1;
-            --card-bg: #ffffff;
-            --accent-blue: #4db6ac;
-            --text-main: #2c3e50;
-            --red-pellet: #ff7675;
-            --grey-pellet: #95a5a6;
-            --worm-purple: #a29bfe;
-            --wafer-green: #55efc4;
+            --bg: #f0f9ff;
+            --accent: #00838f;
+            --red-p: #ff7675;
+            --grey-p: #636e72;
+            --worm: #6c5ce7;
+            --wafer: #00b894;
+            --card-white: rgba(255, 255, 255, 0.8);
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #e0f2f1 0%, #b2ebf2 100%);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+            font-family: 'Quicksand', sans-serif; /* Soft, rounded font */
+            background: linear-gradient(180deg, #e0f7fa 0%, #ffffff 100%);
             margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            color: #2d3436;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 900px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 columns for the middle days */
+            gap: 12px;
         }
 
         h1 {
+            grid-column: 1 / -1;
+            text-align: center;
             font-weight: 300;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
         }
 
-        .schedule-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            max-width: 1000px;
-            width: 100%;
-        }
-
+        /* Card Basics */
         .day-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            background: var(--card-white);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(255,255,255,0.3);
+            justify-content: center;
+            transition: 0.3s;
         }
 
         .day-card:hover {
-            transform: translateY(-5px);
+            transform: scale(1.02);
+            background: white;
+        }
+
+        /* Sunday & Saturday: Full Width */
+        .full-width {
+            grid-column: 1 / -1;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
         }
 
         .day-name {
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: var(--accent-blue);
-            margin-bottom: 12px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 5px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        .food-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
 
         .food-item {
-            font-size: 0.9rem;
-            margin: 8px 0;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            margin: 4px 0;
         }
 
-        .dot {
-            height: 10px;
-            width: 10px;
-            border-radius: 50%;
-            display: inline-block;
-        }
+        /* Colors and Icons */
+        .dot { height: 8px; width: 8px; border-radius: 50%; }
+        .red-d { background: var(--red-p); }
+        .grey-d { background: var(--grey-p); }
+        
+        .label-red { color: var(--red-p); font-weight: bold; }
+        .label-grey { color: var(--grey-p); font-weight: bold; }
+        .label-worm { color: var(--worm); font-style: italic; }
+        .label-wafer { color: var(--wafer); font-weight: bold; }
 
-        .tag {
-            font-size: 0.7rem;
+        .tag-night {
+            font-size: 0.65rem;
+            background: #dfe6e9;
+            padding: 2px 5px;
+            border-radius: 4px;
             text-transform: uppercase;
-            padding: 2px 8px;
-            border-radius: 10px;
-            background: #f1f2f6;
-            font-weight: bold;
-            margin-left: auto;
         }
 
-        /* Food Styling */
-        .bloodworms { color: var(--worm-purple); font-weight: 600; }
-        .wafers { color: #2dcc70; font-weight: 600; }
-        .red { color: var(--red-pellet); }
-        .grey { color: var(--grey-pellet); }
-
-        @media (max-width: 600px) {
-            .schedule-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+        /* Mobile adjustments */
+        @media (max-width: 700px) {
+            .container { grid-template-columns: 1fr; }
+            .full-width { flex-direction: column; text-align: center; }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h1>aquarium menu 🫧</h1>
+<div class="container">
+    <h1>Bubbles & Bites Schedule 🫧</h1>
 
-    <div class="schedule-grid">
-        <div class="day-card">
-            <div class="day-name">Monday</div>
-            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
-            <div class="food-item bloodworms">🪱 Bloodworms</div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-name">Tuesday</div>
-            <div class="food-item grey"><span class="dot" style="background:var(--grey-pellet)"></span> Grey Pellet</div>
-            <div class="food-item wafers">🌿 Algae Wafer <span class="tag">Night</span></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-name">Wednesday</div>
-            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-name">Thursday</div>
-            <div class="food-item grey"><span class="dot" style="background:var(--grey-pellet)"></span> Grey Pellet</div>
-            <div class="food-item bloodworms">🪱 Bloodworms</div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-name">Friday</div>
-            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
-            <div class="food-item wafers">🌿 Algae Wafer <span class="tag">Night</span></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-name">Saturday</div>
-            <div class="food-item grey"><span class="dot" style="background:var(--grey-pellet)"></span> Grey Pellet</div>
-            <div class="food-item bloodworms">🪱 Bloodworms</div>
-        </div>
-
-        <div class="day-card" style="opacity: 0.9;">
-            <div class="day-name">Sunday</div>
-            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
-            <div class="food-item" style="color:#bdc3c7; font-style: italic;">Relax Day</div>
+    <div class="day-card full-width" style="background: rgba(255, 255, 255, 0.9);">
+        <div class="day-name" style="font-size: 1.4rem;">Sunday</div>
+        <div class="food-list">
+            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellet Base</div>
+            <div class="food-item" style="opacity: 0.5;">Rest day for treats</div>
         </div>
     </div>
+
+    <div class="day-card">
+        <div class="day-name">Mon</div>
+        <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
+        <div class="food-item label-worm">🪱 Bloodworms</div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-name">Tue</div>
+        <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
+        <div class="food-item label-wafer">🌿 Wafer <span class="tag-night">PM</span></div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-name">Wed</div>
+        <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-name">Thu</div>
+        <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
+        <div class="food-item label-worm">🪱 Bloodworms</div>
+    </div>
+
+    <div class="day-card">
+        <div class="day-name">Fri</div>
+        <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
+        <div class="food-item label-wafer">🌿 Wafer <span class="tag-night">PM</span></div>
+    </div>
+
+    <div class="day-card full-width" style="background: rgba(255, 255, 255, 0.9); border-bottom: 4px solid var(--accent);">
+        <div class="day-name" style="font-size: 1.4rem;">Saturday</div>
+        <div class="food-list">
+            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellet Base</div>
+            <div class="food-item label-worm">🪱 Bloodworms (Special Treat!)</div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
