@@ -28,40 +28,41 @@
             flex-direction: column;
         }
 
-        .header {
+        .header-title {
             text-align: center;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             padding: 2px 0;
             text-transform: lowercase;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .main-container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
             padding-bottom: 5px;
         }
 
         .row {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex: 1;
             min-height: 0;
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 18px;
-            padding: 10px;
+            border-radius: 20px;
+            padding: 12px 8px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center; /* Centers items horizontally */
-            text-align: center;    /* Centers text lines */
+            /* Key change: Space between header at top and food in middle */
+            justify-content: space-between; 
+            align-items: center;
+            text-align: center;
             box-shadow: 0 6px 0px rgba(0,0,0,0.1);
             transition: all 0.2s ease;
             cursor: pointer;
@@ -74,105 +75,130 @@
         .w-50 { width: 50%; }
 
         .card.done {
-            opacity: 0.2;
+            opacity: 0.15;
             filter: grayscale(1);
-            transform: scale(0.95);
+            transform: scale(0.96);
         }
 
+        /* The Header Style */
         .day-label {
-            font-family: 'Pacifico', cursive; /* Cute script font */
-            font-size: 1.4rem; /* Larger font */
+            font-family: 'Pacifico', cursive;
+            font-size: 1.6rem; /* Large and prominent */
             color: #00838f;
-            margin-bottom: 2px;
-            line-height: 1.2;
+            line-height: 1;
+            margin-top: 2px;
+            width: 100%;
         }
 
-        /* Smaller labels for the 3-column row to prevent overlap */
-        .w-33 .day-label {
-            font-size: 1.1rem;
+        /* Scaling for the 3-day row */
+        .w-33 .day-label { font-size: 1.2rem; }
+
+        /* Food Items Container */
+        .food-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centers food vertically in remaining space */
+            gap: 4px;
         }
 
         .food-item {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 900;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            margin-top: 2px;
-            line-height: 1.1;
+            gap: 5px;
             color: #2d3436;
         }
 
         .water-badge {
             background: var(--water);
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 12px;
-            margin-top: 8px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-top: 4px;
         }
 
         .worm { color: var(--worm); }
         .wafer { color: var(--wafer); }
 
-        /* Animation for tap */
         .card:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0px rgba(0,0,0,0.1);
+            transform: translateY(3px);
+            box-shadow: 0 3px 0px rgba(0,0,0,0.1);
+        }
+
+        @media (max-height: 650px) {
+            .day-label { font-size: 1.3rem; }
+            .food-item { font-size: 0.85rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">bubbles & bites 🫧</div>
+    <div class="header-title">bubbles & bites 🫧</div>
 
     <div class="main-container">
         
         <div class="row">
             <div class="card w-100" id="day-0" onclick="toggleDay('day-0')">
                 <span class="day-label">Sunday</span>
-                <div class="food-item">🔴 Pellets</div>
-                <div class="water-badge">💧 Water Change</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                    <div class="water-badge">💧 Water Change</div>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="card w-33" id="day-1" onclick="toggleDay('day-1')">
                 <span class="day-label">Mon</span>
-                <div class="food-item">🔴 Pellets</div>
-                <div class="food-item worm">🪱</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                    <div class="food-item worm">🪱</div>
+                </div>
             </div>
             <div class="card w-33" id="day-2" onclick="toggleDay('day-2')">
                 <span class="day-label">Tue</span>
-                <div class="food-item">🔴 Pellets</div>
-                <div class="food-item wafer">🌿</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                    <div class="food-item wafer">🌿</div>
+                </div>
             </div>
             <div class="card w-33" id="day-3" onclick="toggleDay('day-3')">
                 <span class="day-label">Wed</span>
-                <div class="food-item">🔴 Pellets</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="card w-50" id="day-4" onclick="toggleDay('day-4')">
                 <span class="day-label">Thursday</span>
-                <div class="food-item">🔴 Pellets</div>
-                <div class="food-item worm">🪱 Bloodworms</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                    <div class="food-item worm">🪱 Bloodworms</div>
+                </div>
             </div>
             <div class="card w-50" id="day-5" onclick="toggleDay('day-5')">
                 <span class="day-label">Friday</span>
-                <div class="food-item">🔴 Pellets</div>
-                <div class="food-item wafer">🌿 Algae Wafers</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                    <div class="food-item wafer">🌿 Algae Wafers</div>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="card w-100" id="day-6" onclick="toggleDay('day-6')">
                 <span class="day-label">Saturday</span>
-                <div class="food-item">🔴 Pellets</div>
-                <div class="food-item worm">🪱 Bloodworms</div>
+                <div class="food-list">
+                    <div class="food-item">🔴 Pellets</div>
+                    <div class="food-item worm">🪱 Bloodworms</div>
+                </div>
             </div>
         </div>
 
