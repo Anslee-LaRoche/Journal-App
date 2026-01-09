@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fish Feeding - Weekly View</title>
+    <title>Fish Menu 🫧</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f0f9ff;
+            --bg: #e0f2f1;
             --accent: #00838f;
             --red-p: #ff7675;
             --grey-p: #636e72;
             --worm: #6c5ce7;
             --wafer: #00b894;
-            --card-white: rgba(255, 255, 255, 0.8);
         }
 
         body {
-            font-family: 'Quicksand', sans-serif; /* Soft, rounded font */
-            background: linear-gradient(180deg, #e0f7fa 0%, #ffffff 100%);
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2ebf2 100%);
             margin: 0;
             display: flex;
             justify-content: center;
@@ -28,60 +28,56 @@
 
         .container {
             width: 95%;
-            max-width: 900px;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 5 columns for the middle days */
+            max-width: 600px; /* Narrower container to keep it on one screen */
+            display: flex;
+            flex-direction: column;
             gap: 12px;
+            padding: 20px;
         }
 
         h1 {
-            grid-column: 1 / -1;
             text-align: center;
-            font-weight: 300;
+            font-weight: 800;
             color: var(--accent);
-            margin-bottom: 10px;
-            font-size: 1.5rem;
+            margin: 0 0 10px 0;
+            font-size: 1.6rem;
+            text-transform: lowercase;
         }
 
-        /* Card Basics */
-        .day-card {
-            background: var(--card-white);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            padding: 15px;
-            border: 1px solid white;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
-        .day-card:hover {
-            transform: scale(1.02);
-            background: white;
-        }
-
-        /* Sunday & Saturday: Full Width */
+        /* Top & Bottom Full Width */
         .full-width {
-            grid-column: 1 / -1;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Middle Grid */
+        .mid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
         }
 
         .day-name {
-            font-weight: 700;
+            font-weight: 800;
+            font-size: 0.9rem;
             color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 5px;
-        }
-
-        .food-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
         }
 
         .food-item {
@@ -89,83 +85,83 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            margin: 4px 0;
+            margin: 2px 0;
         }
 
-        /* Colors and Icons */
-        .dot { height: 8px; width: 8px; border-radius: 50%; }
+        /* Food Styling */
+        .dot { height: 7px; width: 7px; border-radius: 50%; display: inline-block; }
         .red-d { background: var(--red-p); }
         .grey-d { background: var(--grey-p); }
         
-        .label-red { color: var(--red-p); font-weight: bold; }
-        .label-grey { color: var(--grey-p); font-weight: bold; }
-        .label-worm { color: var(--worm); font-style: italic; }
-        .label-wafer { color: var(--wafer); font-weight: bold; }
+        .label-red { color: var(--red-p); font-weight: 700; }
+        .label-grey { color: var(--grey-p); font-weight: 700; }
+        .label-worm { color: var(--worm); font-weight: 700; }
+        .label-wafer { color: var(--wafer); font-weight: 700; }
 
-        .tag-night {
-            font-size: 0.65rem;
+        .night-tag {
+            font-size: 0.6rem;
             background: #dfe6e9;
-            padding: 2px 5px;
+            padding: 1px 4px;
             border-radius: 4px;
-            text-transform: uppercase;
+            margin-left: 2px;
         }
 
-        /* Mobile adjustments */
-        @media (max-width: 700px) {
-            .container { grid-template-columns: 1fr; }
-            .full-width { flex-direction: column; text-align: center; }
+        @media (max-width: 400px) {
+            .mid-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
-    <h1>Bubbles & Bites Schedule 🫧</h1>
+    <h1>bubbles & bites 🫧</h1>
 
-    <div class="day-card full-width" style="background: rgba(255, 255, 255, 0.9);">
-        <div class="day-name" style="font-size: 1.4rem;">Sunday</div>
-        <div class="food-list">
-            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellet Base</div>
-            <div class="food-item" style="opacity: 0.5;">Rest day for treats</div>
+    <div class="card full-width">
+        <div>
+            <div class="day-name">Sunday</div>
+            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellets</div>
+        </div>
+        <div style="font-size: 1.2rem;">🏠</div>
+    </div>
+
+    <div class="mid-grid">
+        <div class="card">
+            <div class="day-name">Mon</div>
+            <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
+            <div class="food-item label-worm">🪱 Blood</div>
+        </div>
+
+        <div class="card">
+            <div class="day-name">Tue</div>
+            <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
+            <div class="food-item label-wafer">🌿 Wafer <span class="night-tag">PM</span></div>
+        </div>
+
+        <div class="card">
+            <div class="day-name">Wed</div>
+            <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
+        </div>
+
+        <div class="card">
+            <div class="day-name">Thu</div>
+            <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
+            <div class="food-item label-worm">🪱 Blood</div>
+        </div>
+
+        <div class="card">
+            <div class="day-name">Fri</div>
+            <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
+            <div class="food-item label-wafer">🌿 Wafer <span class="night-tag">PM</span></div>
         </div>
     </div>
 
-    <div class="day-card">
-        <div class="day-name">Mon</div>
-        <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
-        <div class="food-item label-worm">🪱 Bloodworms</div>
-    </div>
-
-    <div class="day-card">
-        <div class="day-name">Tue</div>
-        <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
-        <div class="food-item label-wafer">🌿 Wafer <span class="tag-night">PM</span></div>
-    </div>
-
-    <div class="day-card">
-        <div class="day-name">Wed</div>
-        <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
-    </div>
-
-    <div class="day-card">
-        <div class="day-name">Thu</div>
-        <div class="food-item label-red"><span class="dot red-d"></span> Red</div>
-        <div class="food-item label-worm">🪱 Bloodworms</div>
-    </div>
-
-    <div class="day-card">
-        <div class="day-name">Fri</div>
-        <div class="food-item label-grey"><span class="dot grey-d"></span> Grey</div>
-        <div class="food-item label-wafer">🌿 Wafer <span class="tag-night">PM</span></div>
-    </div>
-
-    <div class="day-card full-width" style="background: rgba(255, 255, 255, 0.9); border-bottom: 4px solid var(--accent);">
-        <div class="day-name" style="font-size: 1.4rem;">Saturday</div>
-        <div class="food-list">
-            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellet Base</div>
-            <div class="food-item label-worm">🪱 Bloodworms (Special Treat!)</div>
+    <div class="card full-width">
+        <div>
+            <div class="day-name">Saturday</div>
+            <div class="food-item label-red"><span class="dot red-d"></span> Red Pellets</div>
+            <div class="food-item label-worm">🪱 Bloodworms</div>
         </div>
+        <div style="font-size: 1.2rem;">✨</div>
     </div>
 </div>
 
