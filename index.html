@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fish Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --card-bg: #ffffff;
@@ -55,11 +55,13 @@
 
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 18px;
             padding: 10px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center; /* Centers items horizontally */
+            text-align: center;    /* Centers text lines */
             box-shadow: 0 6px 0px rgba(0,0,0,0.1);
             transition: all 0.2s ease;
             cursor: pointer;
@@ -72,36 +74,30 @@
         .w-50 { width: 50%; }
 
         .card.done {
-            opacity: 0.25;
+            opacity: 0.2;
             filter: grayscale(1);
             transform: scale(0.95);
         }
 
-        .card.done::after {
-            content: "✓";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3.5rem;
-            opacity: 0.6;
-            color: #2d3436;
-            font-weight: 900;
+        .day-label {
+            font-family: 'Pacifico', cursive; /* Cute script font */
+            font-size: 1.4rem; /* Larger font */
+            color: #00838f;
+            margin-bottom: 2px;
+            line-height: 1.2;
         }
 
-        .day-label {
-            font-size: 0.85rem;
-            color: #636e72;
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 0.5px;
+        /* Smaller labels for the 3-column row to prevent overlap */
+        .w-33 .day-label {
+            font-size: 1.1rem;
         }
 
         .food-item {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 900;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             margin-top: 2px;
             line-height: 1.1;
@@ -113,19 +109,18 @@
             color: white;
             font-size: 0.75rem;
             font-weight: 900;
-            padding: 4px 10px;
-            border-radius: 10px;
-            margin-top: 6px;
-            display: inline-block;
-            align-self: flex-start;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-top: 8px;
         }
 
         .worm { color: var(--worm); }
         .wafer { color: var(--wafer); }
 
-        @media (max-height: 650px) {
-            .food-item { font-size: 1rem; }
-            .day-label { font-size: 0.7rem; }
+        /* Animation for tap */
+        .card:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -194,13 +189,11 @@
             const today = new Date();
             const currentWeek = getWeekNumber(today);
             
-            // Auto-reset every Sunday
             if (today.getDay() === 0 && localStorage.getItem('lastResetWeek') != currentWeek) {
                 localStorage.clear();
                 localStorage.setItem('lastResetWeek', currentWeek);
             }
 
-            // Reload saved taps
             for (let i = 0; i < 7; i++) {
                 const id = 'day-' + i;
                 if (localStorage.getItem(id) === 'true') {
