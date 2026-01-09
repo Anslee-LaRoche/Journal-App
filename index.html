@@ -1,229 +1,156 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fish Feeding Schedule</title>
+    <title>My Fishy Feast Schedule</title>
     <style>
+        :root {
+            --bg-color: #e0f2f1;
+            --card-bg: #ffffff;
+            --accent-blue: #4db6ac;
+            --text-main: #2c3e50;
+            --red-pellet: #ff7675;
+            --grey-pellet: #95a5a6;
+            --worm-purple: #a29bfe;
+            --wafer-green: #55efc4;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f2f1 0%, #b2ebf2 100%);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
             min-height: 100vh;
         }
 
-```
-    .container {
-        background: white;
-        border-radius: 15px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    
-    h1 {
-        text-align: center;
-        color: #2d3748;
-        margin-bottom: 10px;
-        font-size: 2em;
-    }
-    
-    .subtitle {
-        text-align: center;
-        color: #718096;
-        margin-bottom: 30px;
-        font-style: italic;
-    }
-    
-    .calendar {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-    
-    .day-card {
-        background: #f7fafc;
-        border-radius: 10px;
-        padding: 15px;
-        border: 2px solid #e2e8f0;
-        min-height: 200px;
-    }
-    
-    .day-header {
-        font-weight: bold;
-        color: #2d3748;
-        text-align: center;
-        margin-bottom: 12px;
-        font-size: 1.1em;
-        padding-bottom: 8px;
-        border-bottom: 2px solid #cbd5e0;
-    }
-    
-    .feeding-item {
-        background: white;
-        padding: 8px;
-        margin: 8px 0;
-        border-radius: 6px;
-        font-size: 0.9em;
-        border-left: 4px solid #4299e1;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .time {
-        font-weight: bold;
-        color: #2b6cb0;
-        display: block;
-        margin-bottom: 4px;
-    }
-    
-    .food {
-        color: #4a5568;
-    }
-    
-    .night {
-        border-left-color: #805ad5;
-    }
-    
-    .night .time {
-        color: #6b46c1;
-    }
-    
-    .legend {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-top: 20px;
-        padding: 15px;
-        background: #edf2f7;
-        border-radius: 8px;
-    }
-    
-    .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    .legend-box {
-        width: 20px;
-        height: 20px;
-        border-radius: 4px;
-    }
-    
-    .legend-morning {
-        background: #4299e1;
-    }
-    
-    .legend-night {
-        background: #805ad5;
-    }
-    
-    @media (max-width: 768px) {
-        .calendar {
-            grid-template-columns: 1fr;
+        h1 {
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-    }
-</style>
-```
 
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .day-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            margin-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        .food-item {
+            font-size: 0.9rem;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #f1f2f6;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        /* Food Styling */
+        .bloodworms { color: var(--worm-purple); font-weight: 600; }
+        .wafers { color: #2dcc70; font-weight: 600; }
+        .red { color: var(--red-pellet); }
+        .grey { color: var(--grey-pellet); }
+
+        @media (max-width: 600px) {
+            .schedule-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🐠 Weekly Feeding Schedule 🐠</h1>
-        <p class="subtitle">This pattern repeats every week</p>
 
-```
-    <div class="calendar">
+    <h1>aquarium menu 🫧</h1>
+
+    <div class="schedule-grid">
         <div class="day-card">
-            <div class="day-header">Monday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets + pinch crushed bloodworms</span>
-            </div>
+            <div class="day-name">Monday</div>
+            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
+            <div class="food-item bloodworms">🪱 Bloodworms</div>
         </div>
-        
+
         <div class="day-card">
-            <div class="day-header">Tuesday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets</span>
-            </div>
-            <div class="feeding-item night">
-                <span class="time">Night (lights out):</span>
-                <span class="food">1 algae wafer</span>
-            </div>
+            <div class="day-name">Tuesday</div>
+            <div class="food-item grey"><span class="dot" style="background:var(--grey-pellet)"></span> Grey Pellet</div>
+            <div class="food-item wafers">🌿 Algae Wafer <span class="tag">Night</span></div>
         </div>
-        
+
         <div class="day-card">
-            <div class="day-header">Wednesday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets</span>
-            </div>
+            <div class="day-name">Wednesday</div>
+            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
         </div>
-        
+
         <div class="day-card">
-            <div class="day-header">Thursday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets + pinch crushed bloodworms</span>
-            </div>
+            <div class="day-name">Thursday</div>
+            <div class="food-item grey"><span class="dot" style="background:var(--grey-pellet)"></span> Grey Pellet</div>
+            <div class="food-item bloodworms">🪱 Bloodworms</div>
         </div>
-        
+
         <div class="day-card">
-            <div class="day-header">Friday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets</span>
-            </div>
-            <div class="feeding-item night">
-                <span class="time">Night (lights out):</span>
-                <span class="food">1 algae wafer</span>
-            </div>
+            <div class="day-name">Friday</div>
+            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
+            <div class="food-item wafers">🌿 Algae Wafer <span class="tag">Night</span></div>
         </div>
-        
+
         <div class="day-card">
-            <div class="day-header">Saturday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets + pinch crushed bloodworms</span>
-            </div>
+            <div class="day-name">Saturday</div>
+            <div class="food-item grey"><span class="dot" style="background:var(--grey-pellet)"></span> Grey Pellet</div>
+            <div class="food-item bloodworms">🪱 Bloodworms</div>
         </div>
-        
-        <div class="day-card">
-            <div class="day-header">Sunday</div>
-            <div class="feeding-item">
-                <span class="time">Morning/Evening:</span>
-                <span class="food">Small pinch floating pellets</span>
-            </div>
+
+        <div class="day-card" style="opacity: 0.9;">
+            <div class="day-name">Sunday</div>
+            <div class="food-item red"><span class="dot" style="background:var(--red-pellet)"></span> Red Pellet</div>
+            <div class="food-item" style="color:#bdc3c7; font-style: italic;">Relax Day</div>
         </div>
     </div>
-    
-    <div class="legend">
-        <div class="legend-item">
-            <div class="legend-box legend-morning"></div>
-            <span>Morning/Evening Feed</span>
-        </div>
-        <div class="legend-item">
-            <div class="legend-box legend-night"></div>
-            <span>Night Feed (after lights out)</span>
-        </div>
-    </div>
-    
-    <div style="margin-top: 20px; padding: 15px; background: #fff5f5; border-left: 4px solid #fc8181; border-radius: 6px;">
-        <strong>⚠️ Important Reminders:</strong>
-        <ul style="margin: 10px 0; padding-left: 20px;">
-            <li>"Small pinch" = amount eaten in 2-3 minutes</li>
-            <li>Alternate between red and grey pellets</li>
-            <li>If food is still there after 5 minutes, you're overfeeding</li>
-            <li>Consider getting whole bloodworms/frozen food for Slipknot</li>
-        </ul>
-    </div>
-</div>
-```
 
 </body>
 </html>
