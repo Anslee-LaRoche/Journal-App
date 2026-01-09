@@ -56,7 +56,7 @@
         .card {
             background: var(--card-bg);
             border-radius: 20px;
-            padding: 10px 6px;
+            padding: 10px 4px;
             display: flex;
             flex-direction: column;
             justify-content: space-between; 
@@ -68,10 +68,9 @@
             position: relative;
             border: 2px solid rgba(0,0,0,0.05);
             width: 100%;
-            height: 100%;
         }
 
-        /* NEW: Grey out ONLY the card contents and background */
+        /* Grey out ONLY the card contents */
         .card.done {
             background: rgba(255, 255, 255, 0.25);
             box-shadow: 0 2px 0px rgba(0,0,0,0.05);
@@ -91,14 +90,14 @@
 
         .day-label {
             font-family: 'Pacifico', cursive;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             color: #00838f;
             line-height: 1;
             margin-top: 2px;
-            transition: 0.2s;
         }
 
-        .w-33 .day-label { font-size: 1.3rem; }
+        /* Slightly smaller script for the 3-wide row to fit full names */
+        .w-33 .day-label { font-size: 1.15rem; }
 
         .food-list {
             flex: 1;
@@ -107,19 +106,22 @@
             justify-content: center;
             gap: 2px;
             width: 100%;
-            transition: 0.2s;
         }
 
-        /* Responsive font sizing for food text */
         .food-item {
-            font-size: clamp(0.7rem, 4.5vh, 1.1rem);
+            font-size: 1rem;
             font-weight: 900;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
             color: #2d3436;
             white-space: nowrap;
+        }
+
+        /* Targeted shrink for Tuesday's long text */
+        .tight-text {
+            font-size: 0.75rem !important;
         }
 
         .water-badge {
@@ -130,7 +132,6 @@
             padding: 3px 10px;
             border-radius: 10px;
             margin-top: 4px;
-            transition: 0.2s;
         }
 
         .worm { color: var(--worm); }
@@ -159,21 +160,21 @@
 
         <div class="row">
             <div class="card w-33" id="day-1" onclick="toggleDay('day-1')">
-                <span class="day-label">Mon</span>
+                <span class="day-label">Monday</span>
                 <div class="food-list">
                     <div class="food-item">🔴 Pellets</div>
                     <div class="food-item worm">🪱</div>
                 </div>
             </div>
             <div class="card w-33" id="day-2" onclick="toggleDay('day-2')">
-                <span class="day-label">Tue</span>
+                <span class="day-label">Tuesday</span>
                 <div class="food-list">
                     <div class="food-item">🔴 Pellets</div>
-                    <div class="food-item wafer">🌿 Algae Wafers</div>
+                    <div class="food-item wafer tight-text">🌿 Algae Wafers</div>
                 </div>
             </div>
             <div class="card w-33" id="day-3" onclick="toggleDay('day-3')">
-                <span class="day-label">Wed</span>
+                <span class="day-label">Wednesday</span>
                 <div class="food-list">
                     <div class="food-item">🔴 Pellets</div>
                 </div>
