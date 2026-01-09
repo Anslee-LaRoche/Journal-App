@@ -7,24 +7,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1a1a2e; /* Slightly deeper for better contrast */
-            --card-bg: rgba(255, 255, 255, 0.92);
+            --bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.95);
             --red-p: #ff5252;
             --grey-p: #718093;
             --worm: #8854d0;
             --wafer: #20bf6b;
-            --accent: #0fbcf9;
+            --water: #0984e3;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(160deg, #00d2ff 0%, #3a7bd5 100%);
             margin: 0;
             padding: 10px;
-            height: 100vh; /* Lock height to screen */
-            overflow: hidden; /* Prevent scrolling */
+            height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -35,12 +35,11 @@
             font-size: 1.2rem;
             font-weight: 900;
             margin-bottom: 8px;
-            text-transform: lowercase;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .main-stack {
-            flex: 1; /* Fills remaining space */
+            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -54,60 +53,59 @@
             flex-direction: column;
             justify-content: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
         }
 
-        /* Sunday, Thursday, Friday, Saturday all span full width */
-        .full-row {
-            width: 100%;
+        /* The "Completed" State */
+        .card.done {
+            opacity: 0.4;
+            filter: grayscale(1);
+            transform: scale(0.98);
         }
 
-        /* Monday, Tuesday, Wednesday sit side-by-side */
-        .mid-row {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+        .card.done::after {
+            content: "✓";
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: #2f3542;
         }
 
-        .day-label {
-            font-size: 0.75rem;
-            color: #576574;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
+        .full-row { width: 100%; }
+        .mid-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 
-        .food-item {
-            font-size: 0.9rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .horizontal-split {
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .day-label { font-size: 0.75rem; color: #576574; text-transform: uppercase; margin-bottom: 4px; }
+        .food-item { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .horizontal-split { flex-direction: row; justify-content: space-between; align-items: center; }
 
         .dot { height: 10px; width: 10px; border-radius: 50%; }
         .red { color: var(--red-p); }
         .grey { color: var(--grey-p); }
         .worm { color: var(--worm); }
         .wafer { color: var(--wafer); }
-
-        .tag {
+        
+        .water-badge {
+            background: var(--water);
+            color: white;
             font-size: 0.65rem;
-            background: #f1f2f6;
-            padding: 2px 6px;
-            border-radius: 6px;
-            color: #2f3542;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-top: 4px;
+            display: inline-block;
+            animation: pulse 2s infinite;
         }
 
-        @media (max-height: 600px) {
-            .header { font-size: 1rem; margin-bottom: 4px; }
-            .card { padding: 8px 12px; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
         }
+
+        .tag { font-size: 0.65rem; background: #f1f2f6; padding: 2px 6px; border-radius: 6px; color: #2f3542; }
     </style>
 </head>
 <body>
@@ -115,53 +113,94 @@
     <div class="header">bubbles & bites 🫧</div>
 
     <div class="main-stack">
-        <div class="card full-row horizontal-split">
-            <span class="day-label">Sunday</span>
+        <div class="card full-row horizontal-split" id="day-0" onclick="toggleDay('day-0')">
+            <div>
+                <span class="day-label">Sunday</span>
+                <div class="water-badge">💧 Water Change Day</div>
+            </div>
             <div class="food-item red"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
         </div>
 
         <div class="mid-row">
-            <div class="card">
+            <div class="card" id="day-1" onclick="toggleDay('day-1')">
                 <span class="day-label">Mon</span>
                 <div class="food-item grey">Grey</div>
                 <div class="food-item worm">🪱</div>
             </div>
-            <div class="card">
+            <div class="card" id="day-2" onclick="toggleDay('day-2')">
                 <span class="day-label">Tue</span>
                 <div class="food-item red">Red</div>
-                <div class="food-item wafer">🌿 <span class="tag">PM</span></div>
+                <div class="food-item wafer">🌿</div>
             </div>
-            <div class="card">
+            <div class="card" id="day-3" onclick="toggleDay('day-3')">
                 <span class="day-label">Wed</span>
                 <div class="food-item grey">Grey</div>
-                <div class="food-item" style="opacity:0.3; font-size: 0.7rem;">None</div>
             </div>
         </div>
 
-        <div class="card full-row horizontal-split">
+        <div class="card full-row horizontal-split" id="day-4" onclick="toggleDay('day-4')">
             <span class="day-label">Thursday</span>
             <div style="text-align: right;">
-                <div class="food-item red" style="justify-content: flex-end;"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
-                <div class="food-item worm" style="justify-content: flex-end;">🪱 Bloodworms</div>
+                <div class="food-item red"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
+                <div class="food-item worm">🪱 Bloodworms</div>
             </div>
         </div>
 
-        <div class="card full-row horizontal-split">
+        <div class="card full-row horizontal-split" id="day-5" onclick="toggleDay('day-5')">
             <span class="day-label">Friday</span>
             <div style="text-align: right;">
-                <div class="food-item grey" style="justify-content: flex-end;"><div class="dot" style="background:var(--grey-p)"></div> Grey Pellet</div>
-                <div class="food-item wafer" style="justify-content: flex-end;">🌿 Algae Wafer <span class="tag">PM</span></div>
+                <div class="food-item grey"><div class="dot" style="background:var(--grey-p)"></div> Grey Pellet</div>
+                <div class="food-item wafer">🌿 Algae Wafer <span class="tag">PM</span></div>
             </div>
         </div>
 
-        <div class="card full-row horizontal-split" style="border-bottom: 5px solid var(--accent);">
+        <div class="card full-row horizontal-split" id="day-6" onclick="toggleDay('day-6')">
             <span class="day-label">Saturday</span>
             <div style="text-align: right;">
-                <div class="food-item red" style="justify-content: flex-end;"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
-                <div class="food-item worm" style="justify-content: flex-end;">🪱 Bloodworms</div>
+                <div class="food-item red"><div class="dot" style="background:var(--red-p)"></div> Red Pellet</div>
+                <div class="food-item worm">🪱 Bloodworms</div>
             </div>
         </div>
     </div>
 
+    <script>
+        // Function to toggle the "done" state and save to local storage
+        function toggleDay(id) {
+            const card = document.getElementById(id);
+            card.classList.toggle('done');
+            const isDone = card.classList.contains('done');
+            localStorage.setItem(id, isDone);
+        }
+
+        // Load saved states and check for weekly reset
+        window.onload = function() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0 is Sunday
+            const lastVisit = localStorage.getItem('lastVisitDate');
+            const currentWeek = getWeekNumber(today);
+
+            // If it's Sunday and we haven't reset this week yet
+            if (dayOfWeek === 0 && localStorage.getItem('lastResetWeek') != currentWeek) {
+                localStorage.clear();
+                localStorage.setItem('lastResetWeek', currentWeek);
+            }
+
+            // Apply saved "done" states
+            for (let i = 0; i < 7; i++) {
+                const id = 'day-' + i;
+                if (localStorage.getItem(id) === 'true') {
+                    document.getElementById(id).classList.add('done');
+                }
+            }
+        };
+
+        // Helper to get week number to ensure we only reset once per Sunday
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        }
+    </script>
 </body>
 </html>
