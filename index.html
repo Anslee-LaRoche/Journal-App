@@ -1,115 +1,229 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cozy Journal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Feeding Schedule</title>
     <style>
-        :root {
-            --leather: #3d2b1f;
-            --paper: #fdf5e6;
-            --ink: #2c3e50;
-            --line: rgba(173, 216, 230, 0.4);
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
 
-        body, html {
-            background-color: #121212;
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* Keeps the "desk" still */
+```
+    .container {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    h1 {
+        text-align: center;
+        color: #2d3748;
+        margin-bottom: 10px;
+        font-size: 2em;
+    }
+    
+    .subtitle {
+        text-align: center;
+        color: #718096;
+        margin-bottom: 30px;
+        font-style: italic;
+    }
+    
+    .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+    
+    .day-card {
+        background: #f7fafc;
+        border-radius: 10px;
+        padding: 15px;
+        border: 2px solid #e2e8f0;
+        min-height: 200px;
+    }
+    
+    .day-header {
+        font-weight: bold;
+        color: #2d3748;
+        text-align: center;
+        margin-bottom: 12px;
+        font-size: 1.1em;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #cbd5e0;
+    }
+    
+    .feeding-item {
+        background: white;
+        padding: 8px;
+        margin: 8px 0;
+        border-radius: 6px;
+        font-size: 0.9em;
+        border-left: 4px solid #4299e1;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .time {
+        font-weight: bold;
+        color: #2b6cb0;
+        display: block;
+        margin-bottom: 4px;
+    }
+    
+    .food {
+        color: #4a5568;
+    }
+    
+    .night {
+        border-left-color: #805ad5;
+    }
+    
+    .night .time {
+        color: #6b46c1;
+    }
+    
+    .legend {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 20px;
+        padding: 15px;
+        background: #edf2f7;
+        border-radius: 8px;
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .legend-box {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+    }
+    
+    .legend-morning {
+        background: #4299e1;
+    }
+    
+    .legend-night {
+        background: #805ad5;
+    }
+    
+    @media (max-width: 768px) {
+        .calendar {
+            grid-template-columns: 1fr;
         }
+    }
+</style>
+```
 
-        /* The Leather Notebook Container */
-        .notebook-outer {
-            background: var(--leather);
-            background-image: 
-                radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
-            background-size: 4px 4px; /* Tiny leather grain */
-            width: 92%;
-            height: 85vh;
-            border-radius: 8px 20px 20px 8px;
-            padding: 15px 10px 15px 25px;
-            box-sizing: border-box;
-            box-shadow: 
-                0 25px 50px -12px rgba(0,0,0,0.8),
-                inset -10px 0 20px rgba(0,0,0,0.5), /* Cover curve */
-                inset 5px 0 10px rgba(255,255,255,0.05);
-            display: flex;
-        }
-
-        /* The Paper Page */
-        .page {
-            background-color: var(--paper);
-            background-image: 
-                linear-gradient(var(--line) 1px, transparent 1px);
-            background-size: 100% 35px; /* Line spacing */
-            width: 100%;
-            height: 100%;
-            position: relative;
-            padding: 10px 25px 0px 25px;
-            box-sizing: border-box;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
-            /* Realistic Torn Edge */
-            clip-path: polygon(
-                0% 0%, 98% 0.5%, 100% 3%, 97% 8%, 100% 12%, 
-                98% 20%, 100% 28%, 97% 35%, 100% 45%, 
-                98% 55%, 100% 65%, 97% 75%, 100% 85%, 
-                98% 94%, 100% 100%, 0% 100%
-            );
-        }
-
-        textarea {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: transparent;
-            font-family: 'Caveat', cursive;
-            font-size: 1.6rem;
-            line-height: 35px; /* Matches background-size */
-            color: var(--ink);
-            resize: none;
-            outline: none;
-            padding-top: 25px;
-            padding-bottom: 250px; /* IMPORTANT: Keeps text above keyboard */
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Subtle page texture overlay */
-        .page::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>🐠 Weekly Feeding Schedule 🐠</h1>
+        <p class="subtitle">This pattern repeats every week</p>
 
-    <div class="notebook-outer">
-        <div class="page">
-            <textarea id="journal-input" placeholder="Once upon a time..."></textarea>
+```
+    <div class="calendar">
+        <div class="day-card">
+            <div class="day-header">Monday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets + pinch crushed bloodworms</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <div class="day-header">Tuesday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets</span>
+            </div>
+            <div class="feeding-item night">
+                <span class="time">Night (lights out):</span>
+                <span class="food">1 algae wafer</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <div class="day-header">Wednesday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <div class="day-header">Thursday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets + pinch crushed bloodworms</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <div class="day-header">Friday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets</span>
+            </div>
+            <div class="feeding-item night">
+                <span class="time">Night (lights out):</span>
+                <span class="food">1 algae wafer</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <div class="day-header">Saturday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets + pinch crushed bloodworms</span>
+            </div>
+        </div>
+        
+        <div class="day-card">
+            <div class="day-header">Sunday</div>
+            <div class="feeding-item">
+                <span class="time">Morning/Evening:</span>
+                <span class="food">Small pinch floating pellets</span>
+            </div>
         </div>
     </div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-box legend-morning"></div>
+            <span>Morning/Evening Feed</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-box legend-night"></div>
+            <span>Night Feed (after lights out)</span>
+        </div>
+    </div>
+    
+    <div style="margin-top: 20px; padding: 15px; background: #fff5f5; border-left: 4px solid #fc8181; border-radius: 6px;">
+        <strong>⚠️ Important Reminders:</strong>
+        <ul style="margin: 10px 0; padding-left: 20px;">
+            <li>"Small pinch" = amount eaten in 2-3 minutes</li>
+            <li>Alternate between red and grey pellets</li>
+            <li>If food is still there after 5 minutes, you're overfeeding</li>
+            <li>Consider getting whole bloodworms/frozen food for Slipknot</li>
+        </ul>
+    </div>
+</div>
+```
 
-    <script>
-        const textarea = document.getElementById('journal-input');
-
-        // Load content
-        textarea.value = localStorage.getItem('cozy_journal_content') || '';
-
-        // Save content
-        textarea.addEventListener('input', () => {
-            localStorage.setItem('cozy_journal_content', textarea.value);
-        });
-    </script>
 </body>
 </html>
