@@ -8,8 +8,7 @@
     <style>
         :root {
             --card-bg: #ffffff;
-            --red-p: #d63031;
-            --grey-p: #2d3436;
+            --pellet-dot: #d63031;
             --worm: #6c5ce7;
             --wafer: #00b894;
             --water: #0984e3;
@@ -84,13 +83,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 3rem;
-            opacity: 0.5;
-            color: black;
+            font-size: 3.5rem;
+            opacity: 0.6;
+            color: #2d3436;
+            font-weight: 900;
         }
 
         .day-label {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: #636e72;
             text-transform: uppercase;
             font-weight: 900;
@@ -98,35 +98,33 @@
         }
 
         .food-item {
-            font-size: 1.05rem; /* Larger font */
+            font-size: 1.2rem;
             font-weight: 900;
             display: flex;
             align-items: center;
             gap: 6px;
             margin-top: 2px;
             line-height: 1.1;
+            color: #2d3436;
         }
 
         .water-badge {
             background: var(--water);
             color: white;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 900;
-            padding: 3px 8px;
+            padding: 4px 10px;
             border-radius: 10px;
             margin-top: 6px;
             display: inline-block;
             align-self: flex-start;
         }
 
-        .red { color: var(--red-p); }
-        .grey { color: var(--grey-p); }
         .worm { color: var(--worm); }
         .wafer { color: var(--wafer); }
 
-        /* Small mobile font scaling */
         @media (max-height: 650px) {
-            .food-item { font-size: 0.9rem; }
+            .food-item { font-size: 1rem; }
             .day-label { font-size: 0.7rem; }
         }
     </style>
@@ -140,7 +138,7 @@
         <div class="row">
             <div class="card w-100" id="day-0" onclick="toggleDay('day-0')">
                 <span class="day-label">Sunday</span>
-                <div class="food-item red">🔴 Red Pellets</div>
+                <div class="food-item">🔴 Pellets</div>
                 <div class="water-badge">💧 Water Change</div>
             </div>
         </div>
@@ -148,29 +146,29 @@
         <div class="row">
             <div class="card w-33" id="day-1" onclick="toggleDay('day-1')">
                 <span class="day-label">Mon</span>
-                <div class="food-item grey">⚫ Grey</div>
+                <div class="food-item">🔴 Pellets</div>
                 <div class="food-item worm">🪱</div>
             </div>
             <div class="card w-33" id="day-2" onclick="toggleDay('day-2')">
                 <span class="day-label">Tue</span>
-                <div class="food-item red">🔴 Red</div>
+                <div class="food-item">🔴 Pellets</div>
                 <div class="food-item wafer">🌿</div>
             </div>
             <div class="card w-33" id="day-3" onclick="toggleDay('day-3')">
                 <span class="day-label">Wed</span>
-                <div class="food-item grey">⚫ Grey</div>
+                <div class="food-item">🔴 Pellets</div>
             </div>
         </div>
 
         <div class="row">
             <div class="card w-50" id="day-4" onclick="toggleDay('day-4')">
                 <span class="day-label">Thursday</span>
-                <div class="food-item red">🔴 Red Pellets</div>
+                <div class="food-item">🔴 Pellets</div>
                 <div class="food-item worm">🪱 Bloodworms</div>
             </div>
             <div class="card w-50" id="day-5" onclick="toggleDay('day-5')">
                 <span class="day-label">Friday</span>
-                <div class="food-item grey">⚫ Grey Pellets</div>
+                <div class="food-item">🔴 Pellets</div>
                 <div class="food-item wafer">🌿 Algae Wafers</div>
             </div>
         </div>
@@ -178,7 +176,7 @@
         <div class="row">
             <div class="card w-100" id="day-6" onclick="toggleDay('day-6')">
                 <span class="day-label">Saturday</span>
-                <div class="food-item red">🔴 Red Pellets</div>
+                <div class="food-item">🔴 Pellets</div>
                 <div class="food-item worm">🪱 Bloodworms</div>
             </div>
         </div>
@@ -196,11 +194,13 @@
             const today = new Date();
             const currentWeek = getWeekNumber(today);
             
+            // Auto-reset every Sunday
             if (today.getDay() === 0 && localStorage.getItem('lastResetWeek') != currentWeek) {
                 localStorage.clear();
                 localStorage.setItem('lastResetWeek', currentWeek);
             }
 
+            // Reload saved taps
             for (let i = 0; i < 7; i++) {
                 const id = 'day-' + i;
                 if (localStorage.getItem(id) === 'true') {
